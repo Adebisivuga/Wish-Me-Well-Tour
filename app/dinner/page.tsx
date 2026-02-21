@@ -19,6 +19,7 @@ export default function DinnerPage() {
             alt="Family dinner gathering"
             fill
             className="object-cover"
+            priority
           />
         </div>
         <div className="relative mx-auto max-w-3xl px-6 text-center">
