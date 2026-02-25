@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import { WishForm } from "@/components/wish-form"
 
 export const metadata: Metadata = {
@@ -11,8 +12,17 @@ export default function SendAWishPage() {
   return (
     <div className="pt-20">
       {/* Hero banner */}
-      <section className="bg-foreground py-20 md:py-28">
-        <div className="mx-auto max-w-3xl px-6 text-center">
+      <section className="relative overflow-hidden bg-foreground py-20 md:py-28">
+        <div className="absolute inset-0 opacity-20">
+          <Image
+            src="/images/timi-red.jpg"
+            alt="Timi Dakolo portrait"
+            fill
+            className="object-cover object-top"
+            priority
+          />
+        </div>
+        <div className="relative mx-auto max-w-3xl px-6 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
             Fan Shoutout Platform
           </p>

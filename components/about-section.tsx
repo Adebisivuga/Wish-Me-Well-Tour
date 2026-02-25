@@ -9,10 +9,10 @@ export function AboutSection() {
           {/* Image */}
           <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
             <Image
-              src="/images/timi-portrait.jpg"
+              src="/images/timi-artistic.jpg"
               alt="Timi Dakolo portrait"
               fill
-              className="object-cover"
+              className="object-cover object-top"
             />
           </div>
 

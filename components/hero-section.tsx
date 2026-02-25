@@ -1,7 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 
-const cities = ["Montreal", "Toronto", "Edmonton", "Vancouver", "Ottawa"]
+const cities = ["Vancouver", "Edmonton", "Toronto", "Montreal", "Ottawa"]
 
 export function HeroSection() {
   return (
@@ -9,10 +9,10 @@ export function HeroSection() {
       {/* Background image */}
       <div className="absolute inset-0">
         <Image
-          src="/images/hero-concert.jpg"
+          src="/images/timi-concert.jpg"
           alt="Timi Dakolo performing live on stage"
           fill
-          className="object-cover"
+          className="object-cover object-top"
           priority
         />
         <div className="absolute inset-0 bg-foreground/70" />

@@ -10,36 +10,36 @@ export const metadata: Metadata = {
 
 const cityStories = [
   {
-    city: "Montreal",
-    date: "May 17, 2025",
-    status: "upcoming" as const,
-    testimonial: null,
-    photos: [],
-  },
-  {
-    city: "Toronto",
-    date: "May 24, 2025",
-    status: "upcoming" as const,
-    testimonial: null,
-    photos: [],
-  },
-  {
-    city: "Edmonton",
+    city: "Vancouver",
     date: "May 31, 2025",
     status: "upcoming" as const,
     testimonial: null,
     photos: [],
   },
   {
-    city: "Vancouver",
-    date: "June 7, 2025",
+    city: "Edmonton",
+    date: "TBA",
+    status: "upcoming" as const,
+    testimonial: null,
+    photos: [],
+  },
+  {
+    city: "Toronto",
+    date: "TBA",
+    status: "upcoming" as const,
+    testimonial: null,
+    photos: [],
+  },
+  {
+    city: "Montreal",
+    date: "TBA",
     status: "upcoming" as const,
     testimonial: null,
     photos: [],
   },
   {
     city: "Ottawa",
-    date: "June 14, 2025",
+    date: "TBA",
     status: "upcoming" as const,
     testimonial: null,
     photos: [],
@@ -74,10 +74,11 @@ export default function StoriesPage() {
       <section className="relative overflow-hidden bg-foreground py-20 md:py-28">
         <div className="absolute inset-0 opacity-20">
           <Image
-            src="/images/stories-crowd.jpg"
-            alt="Concert crowd moment"
+            src="/images/timi-stage.jpg"
+            alt="Timi Dakolo performing on stage"
             fill
             className="object-cover"
+            priority
           />
         </div>
         <div className="relative mx-auto max-w-3xl px-6 text-center">
