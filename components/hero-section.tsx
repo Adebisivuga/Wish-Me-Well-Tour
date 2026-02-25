@@ -6,16 +6,19 @@ const cities = ["Vancouver", "Edmonton", "Toronto", "Montreal", "Ottawa"]
 export function HeroSection() {
   return (
     <section className="relative min-h-screen overflow-hidden">
-      {/* Background image */}
+      {/* Video background */}
       <div className="absolute inset-0">
-        <Image
-          src="/images/timi-concert.jpg"
-          alt="Timi Dakolo performing live on stage"
-          fill
-          className="object-cover object-top"
-          priority
-        />
-        <div className="absolute inset-0 bg-foreground/70" />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="/images/timi-concert.jpg"
+          className="absolute inset-0 h-full w-full object-cover"
+        >
+          <source src="/videos/hero-bg.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-foreground/60" />
       </div>
 
       {/* Content */}
