@@ -24,7 +24,7 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center px-6 text-center">
         <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">
-          Canada Tour 2025
+          Canada Tour 2026
         </p>
 
         <h1 className="mt-6 font-serif text-5xl font-bold leading-tight tracking-tight text-primary-foreground md:text-7xl lg:text-8xl text-balance">

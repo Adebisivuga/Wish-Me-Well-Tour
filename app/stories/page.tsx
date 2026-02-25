@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 const cityStories = [
   {
     city: "Vancouver",
-    date: "May 31, 2025",
+    date: "May 31, 2026",
     status: "upcoming" as const,
     testimonial: null,
     photos: [],

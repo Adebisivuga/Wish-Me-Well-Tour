@@ -3,7 +3,7 @@ import { MapPin, Calendar, Ticket } from "lucide-react"
 const tourDates = [
   {
     city: "Vancouver",
-    date: "May 31, 2025",
+    date: "May 31, 2026",
     venue: "York Theatre, Vancouver",
     vip: true,
     ticketUrl: "#",

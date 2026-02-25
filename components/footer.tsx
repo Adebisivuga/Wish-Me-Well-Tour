@@ -99,7 +99,7 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Timi Dakolo. All rights reserved.
           </p>
           <p className="text-xs text-primary-foreground/50">
-            Wish Me Well Canada Tour 2025
+            Wish Me Well Canada Tour 2026
           </p>
         </div>
       </div>
