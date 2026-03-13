@@ -143,51 +143,166 @@ interface NotificationPayload {
 }
 
 async function sendNotification(payload: NotificationPayload) {
-  // This is where you would integrate with an email service like:
-  // - Resend
-  // - SendGrid
-  // - AWS SES
-  // - Postmark
+  const supabase = createAdminClient()
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://wishmewell.tour"
   
-  console.log("📧 Notification triggered:", payload.type, payload.data)
+  console.log("Notification triggered:", payload.type, payload.data)
 
-  // Example implementation with Resend (uncomment when API key is set):
-  /*
-  const resend = new Resend(process.env.RESEND_API_KEY)
-  
-  switch (payload.type) {
-    case "new_letter":
-      await resend.emails.send({
-        from: "Wish Me Well Tour <noreply@wishmewell.tour>",
-        to: "admin@wishmewell.tour",
-        subject: "New Letter Submitted",
-        html: `
-          <h2>New Letter Requires Review</h2>
-          <p>A new Tier ${payload.data.packageTier} letter has been submitted.</p>
-          <p>Amount paid: ₦${payload.data.amount.toLocaleString()}</p>
-          <p><a href="${process.env.NEXT_PUBLIC_APP_URL}/admin/letters/${payload.data.letterId}">Review Now</a></p>
-        `,
-      })
-      break
-
-    case "outbid":
-      // Get user email from database first
-      await resend.emails.send({
-        from: "Wish Me Well Tour <noreply@wishmewell.tour>",
-        to: userEmail,
-        subject: `You've been outbid on "${payload.data.auctionTitle}"`,
-        html: `
-          <h2>You've Been Outbid!</h2>
-          <p>Someone placed a higher bid of ₦${payload.data.newBidAmount.toLocaleString()} on "${payload.data.auctionTitle}".</p>
-          <p>Your previous bid: ₦${payload.data.previousBidAmount.toLocaleString()}</p>
-          <p><a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard/auctions/${payload.data.auctionId}">Place a New Bid</a></p>
-        `,
-      })
-      break
+  // If RESEND_API_KEY is not set, log and return
+  if (!process.env.RESEND_API_KEY) {
+    console.log("RESEND_API_KEY not set - email notifications disabled")
+    return { success: true, type: payload.type, sent: false }
   }
-  */
 
-  // For now, just log the notification
-  // In production, replace with actual email sending
-  return { success: true, type: payload.type }
+  try {
+    const { Resend } = await import("resend")
+    const resend = new Resend(process.env.RESEND_API_KEY)
+    
+    switch (payload.type) {
+      case "new_letter": {
+        // Notify admins of new letter submission
+        const { data: admins } = await supabase
+          .from("profiles")
+          .select("email")
+          .in("role", ["admin", "manager"])
+
+        const adminEmails = admins?.map(a => a.email).filter(Boolean) || []
+        
+        if (adminEmails.length > 0) {
+          await resend.emails.send({
+            from: "Wish Me Well Tour <noreply@wishmewell.tour>",
+            to: adminEmails,
+            subject: "New Letter Submitted - Review Required",
+            html: `
+              <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #8B5E34;">New Letter Requires Review</h2>
+                <p>A new Tier ${payload.data.packageTier} letter has been submitted by ${payload.data.senderName}.</p>
+                <p><strong>Amount paid:</strong> ₦${payload.data.amount.toLocaleString()}</p>
+                <a href="${appUrl}/admin/letters/${payload.data.letterId}" 
+                   style="display: inline-block; background: #8B5E34; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin-top: 16px;">
+                  Review Now
+                </a>
+              </div>
+            `,
+          })
+        }
+        break
+      }
+
+      case "letter_approved": {
+        // Notify user their letter was approved
+        const { data: user } = await supabase
+          .from("profiles")
+          .select("email, full_name")
+          .eq("id", payload.data.userId)
+          .single()
+
+        if (user?.email) {
+          await resend.emails.send({
+            from: "Wish Me Well Tour <noreply@wishmewell.tour>",
+            to: user.email,
+            subject: "Your Letter Has Been Approved!",
+            html: `
+              <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #8B5E34;">Great News, ${user.full_name || "Fan"}!</h2>
+                <p>Your wish letter to Timi Dakolo has been approved and will be delivered.</p>
+                <p>Thank you for being part of the Wish Me Well Tour!</p>
+                <a href="${appUrl}/dashboard/letters" 
+                   style="display: inline-block; background: #8B5E34; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin-top: 16px;">
+                  View Your Letters
+                </a>
+              </div>
+            `,
+          })
+        }
+        break
+      }
+
+      case "outbid": {
+        // Notify user they were outbid
+        const { data: user } = await supabase
+          .from("profiles")
+          .select("email, full_name")
+          .eq("id", payload.data.userId)
+          .single()
+
+        if (user?.email) {
+          await resend.emails.send({
+            from: "Wish Me Well Tour <noreply@wishmewell.tour>",
+            to: user.email,
+            subject: `You've Been Outbid on "${payload.data.auctionTitle}"`,
+            html: `
+              <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #d97706;">You've Been Outbid!</h2>
+                <p>Hi ${user.full_name || "there"},</p>
+                <p>Someone placed a higher bid on <strong>"${payload.data.auctionTitle}"</strong>.</p>
+                <div style="background: #f3f4f6; padding: 16px; border-radius: 8px; margin: 16px 0;">
+                  <p style="margin: 0;"><strong>New highest bid:</strong> ₦${payload.data.newBidAmount.toLocaleString()}</p>
+                  <p style="margin: 8px 0 0 0;"><strong>Your previous bid:</strong> ₦${payload.data.previousBidAmount.toLocaleString()}</p>
+                </div>
+                <p>Don't miss out on this exclusive experience with Timi Dakolo!</p>
+                <a href="${appUrl}/dashboard/auctions/${payload.data.auctionId}" 
+                   style="display: inline-block; background: #8B5E34; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin-top: 16px;">
+                  Place a New Bid
+                </a>
+              </div>
+            `,
+          })
+        }
+        break
+      }
+
+      case "ticket_transfer_initiated": {
+        // This would need the recipient email passed in the payload
+        // For now, log the event
+        console.log("Ticket transfer initiated:", payload.data)
+        break
+      }
+
+      case "ticket_claimed": {
+        // Notify the new owner
+        const { data: newOwner } = await supabase
+          .from("profiles")
+          .select("email, full_name")
+          .eq("id", payload.data.newOwnerId)
+          .single()
+
+        // Get ticket details
+        const { data: ticket } = await supabase
+          .from("tickets")
+          .select("*, tour_events(name, city, event_date)")
+          .eq("id", payload.data.ticketId)
+          .single()
+
+        if (newOwner?.email && ticket) {
+          await resend.emails.send({
+            from: "Wish Me Well Tour <noreply@wishmewell.tour>",
+            to: newOwner.email,
+            subject: "Ticket Successfully Claimed!",
+            html: `
+              <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+                <h2 style="color: #16a34a;">Ticket Claimed Successfully!</h2>
+                <p>Hi ${newOwner.full_name || "there"},</p>
+                <p>You've successfully claimed your ticket for:</p>
+                <div style="background: #f3f4f6; padding: 16px; border-radius: 8px; margin: 16px 0;">
+                  <p style="margin: 0; font-weight: bold;">${ticket.tour_events?.name}</p>
+                  <p style="margin: 8px 0 0 0;">${ticket.tour_events?.city} - ${new Date(ticket.tour_events?.event_date).toLocaleDateString()}</p>
+                </div>
+                <a href="${appUrl}/dashboard/tickets" 
+                   style="display: inline-block; background: #8B5E34; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; margin-top: 16px;">
+                  View Your Tickets
+                </a>
+              </div>
+            `,
+          })
+        }
+        break
+      }
+    }
+
+    return { success: true, type: payload.type, sent: true }
+  } catch (error) {
+    console.error("Email notification error:", error)
+    return { success: false, type: payload.type, error }
+  }
 }
