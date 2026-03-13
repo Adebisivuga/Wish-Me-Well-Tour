@@ -2,12 +2,14 @@
 CREATE TABLE IF NOT EXISTS public.tickets (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   event_id UUID NOT NULL REFERENCES public.tour_events(id) ON DELETE CASCADE,
-  owner_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
-  ticket_type TEXT NOT NULL DEFAULT 'general' CHECK (ticket_type IN ('general', 'vip', 'premium')),
-  price DECIMAL(10, 2) NOT NULL,
-  qr_code TEXT,
-  status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'used', 'transferred', 'cancelled')),
-  seat_info TEXT,
+  user_id UUID NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
+  ticket_tier TEXT NOT NULL DEFAULT 'regular' CHECK (ticket_tier IN ('regular', 'vip', 'vvip')),
+  ticket_number TEXT NOT NULL UNIQUE,
+  qr_code TEXT NOT NULL,
+  price_paid DECIMAL(10, 2) NOT NULL,
+  status TEXT NOT NULL DEFAULT 'valid' CHECK (status IN ('valid', 'used', 'transferred', 'cancelled')),
+  transfer_token UUID,
+  transfer_expires_at TIMESTAMPTZ,
   purchased_at TIMESTAMPTZ DEFAULT NOW(),
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
@@ -32,7 +34,7 @@ ALTER TABLE public.ticket_transfers ENABLE ROW LEVEL SECURITY;
 
 -- Users can read their own tickets
 CREATE POLICY "tickets_select_own" ON public.tickets 
-  FOR SELECT USING (owner_id = auth.uid());
+  FOR SELECT USING (user_id = auth.uid());
 
 -- Admins can read all tickets
 CREATE POLICY "tickets_select_admin" ON public.tickets 
@@ -43,7 +45,11 @@ CREATE POLICY "tickets_select_admin" ON public.tickets
     )
   );
 
--- Admins can insert tickets
+-- Users can insert their own tickets (for purchases)
+CREATE POLICY "tickets_insert_own" ON public.tickets 
+  FOR INSERT WITH CHECK (user_id = auth.uid());
+
+-- Admins can insert tickets for any user
 CREATE POLICY "tickets_insert_admin" ON public.tickets 
   FOR INSERT WITH CHECK (
     EXISTS (
@@ -54,7 +60,7 @@ CREATE POLICY "tickets_insert_admin" ON public.tickets
 
 -- Users can update their own tickets (for transfers)
 CREATE POLICY "tickets_update_own" ON public.tickets 
-  FOR UPDATE USING (owner_id = auth.uid());
+  FOR UPDATE USING (user_id = auth.uid());
 
 -- Admins can update any ticket
 CREATE POLICY "tickets_update_admin" ON public.tickets 
@@ -82,6 +88,7 @@ CREATE TRIGGER tickets_updated_at
   EXECUTE FUNCTION public.update_updated_at_column();
 
 -- Index for faster lookups
-CREATE INDEX IF NOT EXISTS idx_tickets_owner ON public.tickets(owner_id);
+CREATE INDEX IF NOT EXISTS idx_tickets_user ON public.tickets(user_id);
 CREATE INDEX IF NOT EXISTS idx_tickets_event ON public.tickets(event_id);
+CREATE INDEX IF NOT EXISTS idx_tickets_transfer_token ON public.tickets(transfer_token);
 CREATE INDEX IF NOT EXISTS idx_transfers_token ON public.ticket_transfers(transfer_token);

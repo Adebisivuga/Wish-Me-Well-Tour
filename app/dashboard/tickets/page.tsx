@@ -13,15 +13,16 @@ export default async function TicketsPage() {
   const supabase = await createClient()
   const profile = await getProfile()
 
-  const { data: tickets } = await supabase
+  const { data: tickets, error } = await supabase
     .from("tickets")
-    .select("*, tour_events(*)")
+    .select("*, tour_events:event_id(*)")
     .eq("user_id", profile?.id || "")
     .order("purchased_at", { ascending: false })
 
-  const validTickets = tickets?.filter(t => t.status === "valid") || []
-  const usedTickets = tickets?.filter(t => t.status === "used") || []
-  const transferredTickets = tickets?.filter(t => t.status === "transferred") || []
+  const allTickets = tickets || []
+  const validTickets = allTickets.filter(t => t.status === "valid")
+  const usedTickets = allTickets.filter(t => t.status === "used")
+  const transferredTickets = allTickets.filter(t => t.status === "transferred")
 
   return (
     <div className="space-y-8">

@@ -94,7 +94,7 @@ export async function POST(request: Request) {
       message: "Ticket claimed successfully!",
       ticket: {
         id: ticket.id,
-        event: ticket.tour_events?.name,
+        event: ticket.tour_events?.city,
         tier: ticket.ticket_tier,
       },
     })

@@ -7,11 +7,12 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { TICKET_TIERS } from "@/lib/types/database"
 import type { Ticket, TourEvent } from "@/lib/types/database"
-import { QrCode, Send, Calendar, MapPin, Clock } from "lucide-react"
+import { QrCode as QrCodeIcon, Send, Calendar, MapPin, Clock } from "lucide-react"
 import { TransferTicketDialog } from "./transfer-ticket-dialog"
+import { QRCode } from "@/components/ui/qr-code"
 
 interface TicketCardProps {
-  ticket: Ticket & { tour_events: TourEvent }
+  ticket: Ticket & { tour_events?: TourEvent }
 }
 
 export function TicketCard({ ticket }: TicketCardProps) {
@@ -19,6 +20,8 @@ export function TicketCard({ ticket }: TicketCardProps) {
   const [showTransfer, setShowTransfer] = useState(false)
   const tier = TICKET_TIERS[ticket.ticket_tier as keyof typeof TICKET_TIERS]
   const event = ticket.tour_events
+
+  if (!event) return null
 
   const eventDate = new Date(event.event_date)
   const isUpcoming = eventDate > new Date()
@@ -36,7 +39,7 @@ export function TicketCard({ ticket }: TicketCardProps) {
             #{ticket.ticket_number}
           </span>
         </div>
-        <CardTitle className="text-lg font-serif">{event.name}</CardTitle>
+        <CardTitle className="text-lg font-serif">Wish Me Well - {event.city}</CardTitle>
       </CardHeader>
       
       <CardContent className="space-y-4">
@@ -68,7 +71,7 @@ export function TicketCard({ ticket }: TicketCardProps) {
           <Dialog open={showQR} onOpenChange={setShowQR}>
             <DialogTrigger asChild>
               <Button variant="outline" size="sm" className="flex-1">
-                <QrCode className="h-4 w-4 mr-2" />
+                <QrCodeIcon className="h-4 w-4 mr-2" />
                 View QR
               </Button>
             </DialogTrigger>
@@ -80,16 +83,16 @@ export function TicketCard({ ticket }: TicketCardProps) {
                 </DialogDescription>
               </DialogHeader>
               <div className="flex flex-col items-center py-6">
-                <div className="w-48 h-48 bg-muted rounded-lg flex items-center justify-center border-2 border-dashed">
-                  <div className="text-center">
-                    <QrCode className="h-24 w-24 mx-auto text-foreground" />
-                    <p className="text-xs font-mono mt-2">{ticket.qr_code}</p>
-                  </div>
+                <div className="w-52 h-52 bg-white rounded-lg flex items-center justify-center p-2 border">
+                  <QRCode value={ticket.qr_code} size={192} />
                 </div>
-                <div className="mt-4 text-center">
-                  <p className="font-semibold">{event.name}</p>
+                <div className="mt-4 text-center space-y-1">
+                  <p className="font-semibold">{event.city}</p>
                   <p className="text-sm text-muted-foreground">
-                    {tier?.name} - #{ticket.ticket_number}
+                    {tier?.name} Ticket
+                  </p>
+                  <p className="text-xs font-mono text-muted-foreground">
+                    #{ticket.ticket_number}
                   </p>
                 </div>
               </div>
