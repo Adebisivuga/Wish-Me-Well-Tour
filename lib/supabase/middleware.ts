@@ -41,14 +41,30 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  if (
-    // if the user is not logged in and the app path, in this case, /protected, is accessed, redirect to the login page
-    request.nextUrl.pathname.startsWith('/protected') &&
-    !user
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
+  const pathname = request.nextUrl.pathname
+
+  // Protected routes that require authentication
+  const protectedRoutes = ['/dashboard', '/admin', '/protected']
+  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route))
+
+  if (isProtectedRoute && !user) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/login'
+    url.searchParams.set('redirect', pathname)
+    return NextResponse.redirect(url)
+  }
+
+  // Admin routes require admin or manager role
+  // Role check is done at the page level since we need to query the profile
+  // The middleware only ensures the user is authenticated
+
+  // Redirect authenticated users away from auth pages
+  const authRoutes = ['/auth/login', '/auth/signup', '/auth/sign-up']
+  const isAuthRoute = authRoutes.some(route => pathname.startsWith(route))
+  
+  if (isAuthRoute && user) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/dashboard'
     return NextResponse.redirect(url)
   }
 
