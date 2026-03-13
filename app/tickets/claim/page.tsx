@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -9,7 +9,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Loader2, Ticket, CheckCircle, XCircle, LogIn } from "lucide-react"
 import Link from "next/link"
 
-export default function ClaimTicketPage() {
+function ClaimTicketContent() {
   const [status, setStatus] = useState<"loading" | "auth-required" | "ready" | "claiming" | "success" | "error">("loading")
   const [error, setError] = useState<string | null>(null)
   const [ticketInfo, setTicketInfo] = useState<any>(null)
@@ -215,5 +215,21 @@ export default function ClaimTicketPage() {
         </CardFooter>
       </Card>
     </div>
+  )
+}
+
+function ClaimPageLoading() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+    </div>
+  )
+}
+
+export default function ClaimTicketPage() {
+  return (
+    <Suspense fallback={<ClaimPageLoading />}>
+      <ClaimTicketContent />
+    </Suspense>
   )
 }
