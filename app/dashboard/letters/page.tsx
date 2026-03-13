@@ -6,13 +6,13 @@ import { Button } from "@/components/ui/button"
 import { LETTER_PACKAGES } from "@/lib/types/database"
 import type { WishMeWellLetter, TourEvent } from "@/lib/types/database"
 import Link from "next/link"
-import { Mail, Clock, CheckCircle, XCircle, Send as SendIcon } from "lucide-react"
+import { Mail, Clock, CheckCircle, Printer, Send as SendIcon, Share2 } from "lucide-react"
 
 const statusConfig = {
-  pending: { label: "Pending Review", color: "bg-yellow-100 text-yellow-800", icon: Clock },
-  approved: { label: "Approved", color: "bg-green-100 text-green-800", icon: CheckCircle },
-  rejected: { label: "Rejected", color: "bg-red-100 text-red-800", icon: XCircle },
-  delivered: { label: "Delivered", color: "bg-blue-100 text-blue-800", icon: SendIcon },
+  pending: { label: "Received", color: "bg-yellow-100 text-yellow-800", icon: Clock },
+  printed: { label: "Printed", color: "bg-blue-100 text-blue-800", icon: Printer },
+  delivered: { label: "Delivered", color: "bg-green-100 text-green-800", icon: SendIcon },
+  shared: { label: "Shared on Tour", color: "bg-purple-100 text-purple-800", icon: Share2 },
 }
 
 export default async function LettersPage() {
@@ -21,7 +21,7 @@ export default async function LettersPage() {
 
   const { data: letters } = await supabase
     .from("wish_me_well_letters")
-    .select("*, tour_events(*)")
+    .select("*, tour_events:event_id(*)")
     .eq("user_id", profile?.id || "")
     .order("submitted_at", { ascending: false })
 
@@ -117,9 +117,9 @@ export default async function LettersPage() {
                         ₦{letter.amount_paid.toLocaleString()}
                       </span>
                     </div>
-                    {letter.status === "rejected" && letter.admin_notes && (
-                      <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">
-                        <strong>Note:</strong> {letter.admin_notes}
+                    {letter.admin_notes && (
+                      <div className="rounded-lg bg-muted p-3 text-sm text-muted-foreground">
+                        <strong>Note from team:</strong> {letter.admin_notes}
                       </div>
                     )}
                   </CardContent>

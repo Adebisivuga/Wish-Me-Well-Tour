@@ -3,7 +3,7 @@ export type UserRole = "fan" | "admin" | "manager"
 export type TicketStatus = "valid" | "used" | "transferred" | "cancelled"
 export type TicketTier = "vip" | "regular" | "vvip"
 
-export type LetterStatus = "pending" | "approved" | "rejected" | "delivered"
+export type LetterStatus = "pending" | "printed" | "delivered" | "shared"
 export type LetterPackageTier = 1 | 2 | 3
 
 export type AuctionStatus = "upcoming" | "active" | "ended" | "cancelled"
@@ -58,18 +58,23 @@ export interface WishMeWellLetter {
   package_tier: LetterPackageTier
   message: string
   sender_name: string
+  sender_email: string
+  sender_instagram: string | null
+  recipient_name: string
+  recipient_email: string | null
+  recipient_instagram: string | null
   is_anonymous: boolean
+  is_public: boolean
   status: LetterStatus
   admin_notes: string | null
   amount_paid: number
   submitted_at: string
-  reviewed_at: string | null
-  reviewed_by: string | null
   created_at: string
   updated_at: string
   // Joined fields
   event?: TourEvent
   user?: Profile
+  tour_events?: TourEvent
 }
 
 export interface Auction {
