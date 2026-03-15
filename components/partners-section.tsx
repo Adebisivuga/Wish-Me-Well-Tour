@@ -2,6 +2,11 @@ import Image from "next/image"
 
 const partners = [
   {
+    name: "Afterdark Entertainment",
+    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Afterdark%20Entertainment%20LOGO.png-QQQWwpfH3suBDr8sSBIm0ZSbNFV1Rx.jpeg",
+    description: "Label & Management",
+  },
+  {
     name: "AfroVan Connect",
     logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/afrovan-logo%20-z4SGHc8lWckrM3SHyDLdP4TPlZyG9w.jpg",
     description: "Community Partner",
@@ -19,7 +24,7 @@ const partners = [
   {
     name: "Abedorc Media",
     logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Abedorc%20Media%20%28logo%29-lHIDopsULttL3GU08PBvy1aMVAEhuU.jpeg",
-    description: "Media Partner",
+    description: "Project Management",
   },
   {
     name: "FreePass Holding Corp.",
@@ -29,7 +34,7 @@ const partners = [
   {
     name: "Adeba Connector",
     logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Adeba%20logo%20-6bAzEjJD1nm2O9VnYNbjZwLem4hTA1.jpeg",
-    description: "Technology Partner",
+    description: "Community Partner",
   },
 ]
 
@@ -53,7 +58,7 @@ export function PartnersSection() {
         </div>
 
         {/* Partner Logos */}
-        <div className="mt-16 grid grid-cols-2 items-center gap-8 md:grid-cols-3 lg:grid-cols-6">
+        <div className="mt-16 grid grid-cols-2 items-center gap-8 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
           {partners.map((partner) => (
             <div
               key={partner.name}
