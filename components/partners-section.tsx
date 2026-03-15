@@ -26,6 +26,11 @@ const partners = [
     logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/FreePass%20logo-Vw5z2M7cUjkaB7UHa7bZrHe7IN4vWs.png",
     description: "Ticketing Partner",
   },
+  {
+    name: "Adeba Connector",
+    logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Adeba%20logo%20-6bAzEjJD1nm2O9VnYNbjZwLem4hTA1.jpeg",
+    description: "Technology Partner",
+  },
 ]
 
 export function PartnersSection() {
@@ -48,7 +53,7 @@ export function PartnersSection() {
         </div>
 
         {/* Partner Logos */}
-        <div className="mt-16 grid grid-cols-2 items-center gap-8 md:grid-cols-3 lg:grid-cols-5">
+        <div className="mt-16 grid grid-cols-2 items-center gap-8 md:grid-cols-3 lg:grid-cols-6">
           {partners.map((partner) => (
             <div
               key={partner.name}
