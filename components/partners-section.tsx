@@ -1,4 +1,13 @@
 import Image from "next/image"
+import Link from "next/link"
+
+const featuredPartner = {
+  name: "Nigerians.Ca",
+  logo: "/images/partners/nigerians-ca-logo.jpeg",
+  description: "Major Digital Partner",
+  tagline: "Link between Nigeria and Canada",
+  url: "https://www.nigerians.ca",
+}
 
 const partners = [
   {
@@ -55,6 +64,36 @@ export function PartnersSection() {
             Well Tour with their services, resources, and influence across the
             country.
           </p>
+        </div>
+
+        {/* Featured Digital Partner */}
+        <div className="mt-12">
+          <Link
+            href={featuredPartner.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mx-auto block max-w-md"
+          >
+            <div className="rounded-2xl border-2 border-primary/20 bg-background p-6 text-center shadow-md transition-all hover:border-primary/40 hover:shadow-lg">
+              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+                Major Digital Partner
+              </p>
+              <div className="relative mx-auto mt-4 h-20 w-64">
+                <Image
+                  src={featuredPartner.logo}
+                  alt={`${featuredPartner.name} logo`}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <p className="mt-4 text-sm text-muted-foreground">
+                {featuredPartner.tagline}
+              </p>
+              <p className="mt-2 text-xs text-primary group-hover:underline">
+                www.nigerians.ca
+              </p>
+            </div>
+          </Link>
         </div>
 
         {/* Partner Logos */}
