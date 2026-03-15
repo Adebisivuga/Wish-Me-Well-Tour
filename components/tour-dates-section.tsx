@@ -18,7 +18,7 @@ interface TourEvent {
 const fallbackDates = [
   { city: "Vancouver", date: "May 31, 2026", venue: "York Theatre, Vancouver", vip: true },
   { city: "Edmonton", date: "TBA", venue: "To Be Announced", vip: true },
-  { city: "Toronto", date: "TBA", venue: "To Be Announced", vip: true },
+  { city: "Toronto", date: "June 7, 2026", venue: "National Event Venue, 1000 Finch Ave. West, Toronto", vip: true },
   { city: "Montreal", date: "TBA", venue: "To Be Announced", vip: true },
   { city: "Ottawa", date: "TBA", venue: "To Be Announced", vip: true },
 ]
