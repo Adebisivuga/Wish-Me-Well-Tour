@@ -101,6 +101,16 @@ export function Footer() {
           <p className="text-xs text-primary-foreground/50">
             Wish Me Well Canada Tour 2026
           </p>
+          <p className="text-xs text-primary-foreground/50">
+            Developed by{" "}
+            <span className="text-primary-foreground/70">
+              The Arrival Technology
+            </span>{" "}
+            x{" "}
+            <span className="text-primary-foreground/70">
+              FreePass Holdings
+            </span>
+          </p>
         </div>
       </div>
     </footer>
