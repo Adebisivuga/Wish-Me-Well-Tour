@@ -42,13 +42,13 @@ const products = [
   },
   {
     id: 4,
-    name: "Omo Ope Hoodie",
+    name: "Omo Ayo Hoodie",
     onlinePrice: 55,
     venuePrice: 70,
-    image: "/images/merch-hoodie.jpg",
+    image: "/images/merch/omo-ayo-hoodie.jpg",
     description:
-      "The classic 'Omo Ope' design on a premium hoodie. A must-have for true fans.",
-    badge: null,
+      "Black premium hoodie featuring 'Omo Ayo' (Child of Joy) design. The Chorus Leader branding with soft fleece interior.",
+    badge: "Best Seller",
     category: "hoodie",
   },
   {
@@ -56,9 +56,9 @@ const products = [
     name: "Yard People Hoodie",
     onlinePrice: 55,
     venuePrice: 70,
-    image: "/images/merch-hoodie.jpg",
+    image: "/images/merch/yard-people-hoodie.jpg",
     description:
-      "Celebrate with the 'Yard People' hoodie. Represent the movement in style.",
+      "White hoodie with iconic 'Yard People' design. Where comfort meets performance for those who embrace the grind.",
     badge: "New",
     category: "hoodie",
   },
