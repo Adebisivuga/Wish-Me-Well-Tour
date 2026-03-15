@@ -4,7 +4,7 @@ const partners = [
   {
     name: "AfroVan Connect",
     logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/afrovan-logo%20-z4SGHc8lWckrM3SHyDLdP4TPlZyG9w.jpg",
-    description: "Transportation Partner",
+    description: "Community Partner",
   },
   {
     name: "The Cultch",
@@ -22,9 +22,9 @@ const partners = [
     description: "Media Partner",
   },
   {
-    name: "FreePass",
+    name: "FreePass Holding Corp.",
     logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/FreePass%20logo-Vw5z2M7cUjkaB7UHa7bZrHe7IN4vWs.png",
-    description: "Ticketing Partner",
+    description: "Technology Partner",
   },
   {
     name: "Adeba Connector",
