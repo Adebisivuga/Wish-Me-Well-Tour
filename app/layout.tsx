@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import { DM_Sans, Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { AuthProvider } from "@/lib/auth/auth-context"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import "./globals.css"
@@ -51,12 +52,14 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${dmSans.variable} ${playfair.variable}`} data-scroll-behavior="smooth">
       <body className="font-sans antialiased">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <Analytics />
+        <AuthProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <Analytics />
+        </AuthProvider>
       </body>
     </html>
   )
