@@ -22,7 +22,7 @@ export const WISH_PRODUCTS: WishProduct[] = [
     tier: 1,
     name: "Soulful Signature",
     description: "Printed letter signed by Timi, delivered during Meet & Greet",
-    priceInCents: 4500, // $45 CAD
+    priceInCents: 1000, // $10 CAD
     features: [
       "Handwritten-style printed letter",
       "Personally signed by Timi Dakolo",
@@ -35,7 +35,7 @@ export const WISH_PRODUCTS: WishProduct[] = [
     tier: 2,
     name: "The Stage Whisper",
     description: "Includes Tier 1 + Timi mentions the loved one's name during performance",
-    priceInCents: 12000, // $120 CAD
+    priceInCents: 3000, // $30 CAD
     features: [
       "Everything in Soulful Signature",
       "Name mentioned on stage by Timi",
@@ -48,7 +48,7 @@ export const WISH_PRODUCTS: WishProduct[] = [
     tier: 3,
     name: "The Global Echo",
     description: "Includes Tier 1 & 2 + Timi posts the letter on his social media",
-    priceInCents: 25000, // $250 CAD
+    priceInCents: 8000, // $80 CAD
     popular: true,
     features: [
       "Everything in Stage Whisper",
