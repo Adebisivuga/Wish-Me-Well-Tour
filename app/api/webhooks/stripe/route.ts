@@ -2,7 +2,7 @@ import { headers } from "next/headers"
 import { NextResponse } from "next/server"
 import Stripe from "stripe"
 import { stripe } from "@/lib/stripe"
-import { createAdminSupabaseClient } from "@/lib/supabase/admin"
+import { createAdminClient } from "@/lib/supabase/admin"
 
 export async function POST(req: Request) {
   const body = await req.text()
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     )
   }
 
-  const supabase = createAdminSupabaseClient()
+  const supabase = createAdminClient()
 
   switch (event.type) {
     case "checkout.session.completed": {
