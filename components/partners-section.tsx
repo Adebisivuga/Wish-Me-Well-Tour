@@ -15,7 +15,7 @@ const partners = [
   {
     name: "AfroVan Connect",
     logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/afrovan-logo%20-z4SGHc8lWckrM3SHyDLdP4TPlZyG9w.jpg",
-    description: "Community Partner",
+    description: "Community & Promotional Partner",
   },
   {
     name: "The Cultch",
