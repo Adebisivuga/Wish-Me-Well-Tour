@@ -2,6 +2,12 @@ import Image from "next/image"
 
 const partners = [
   {
+    name: "Nigerians.Ca",
+    logo: "/images/partners/nigerians-ca-logo.jpeg",
+    description: "Digital Partner",
+    url: "https://www.nigerians.ca",
+  },
+  {
     name: "Afterdark Entertainment",
     logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Afterdark%20Entertainment%20LOGO.png-QQQWwpfH3suBDr8sSBIm0ZSbNFV1Rx.jpeg",
     description: "Label & Management",
