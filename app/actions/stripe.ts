@@ -3,7 +3,7 @@
 import { headers } from "next/headers"
 import { stripe } from "@/lib/stripe"
 import { getWishProductById, TICKET_ADDON } from "@/lib/wish-products"
-import { createServerSupabaseClient } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/server"
 
 export interface WishCheckoutData {
   productId: string
@@ -56,7 +56,7 @@ export async function startWishCheckoutSession(data: WishCheckoutData) {
   }
 
   // Create pending letter record in database
-  const supabase = await createServerSupabaseClient()
+  const supabase = await createClient()
   const { data: letter, error: letterError } = await supabase
     .from("wish_letters")
     .insert({
