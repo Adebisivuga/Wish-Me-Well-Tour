@@ -20,7 +20,6 @@ export const metadata: Metadata = {
   title: "Wish Me Well Canada Tour | Timi Dakolo",
   description:
     "Join Timi Dakolo as he travels across Montreal, Toronto, Edmonton, Vancouver, and Ottawa sharing music, letters, and unforgettable moments.",
-  generator: "v0.app",
   icons: {
     icon: [
       {
