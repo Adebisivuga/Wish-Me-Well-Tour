@@ -3,7 +3,8 @@ export type UserRole = "fan" | "admin" | "manager"
 export type TicketStatus = "valid" | "used" | "transferred" | "cancelled"
 export type TicketTier = "vip" | "regular" | "vvip"
 
-export type LetterStatus = "pending" | "printed" | "delivered" | "shared"
+export type LetterStatus = "draft" | "pending" | "printed" | "delivered" | "shared"
+export type PaymentStatus = "unpaid" | "pending" | "paid" | "failed" | "refunded"
 export type LetterPackageTier = 1 | 2 | 3
 
 export type AuctionStatus = "upcoming" | "active" | "ended" | "cancelled"
@@ -110,27 +111,50 @@ export interface AuctionBid {
   auction?: Auction
 }
 
-// Package tier details
+// Package tier details - Prices in CAD
 export const LETTER_PACKAGES = {
   1: {
-    name: "Basic Wish",
-    description: "Your message delivered to Timi",
-    price: 5000,
-    features: ["Written message delivered", "Digital confirmation"],
+    name: "Soulful Signature",
+    description: "Printed letter signed by Timi, delivered during Meet & Greet",
+    price: 45,
+    features: [
+      "Handwritten-style printed letter",
+      "Personally signed by Timi Dakolo",
+      "Delivered during Meet & Greet",
+      "Digital confirmation receipt",
+    ],
   },
   2: {
-    name: "Special Wish",
-    description: "Priority message with acknowledgment",
-    price: 15000,
-    features: ["Priority delivery", "Personal acknowledgment", "Digital certificate"],
+    name: "The Stage Whisper",
+    description: "Includes Tier 1 + Timi mentions the loved one's name during performance",
+    price: 120,
+    features: [
+      "Everything in Soulful Signature",
+      "Name mentioned on stage by Timi",
+      "Special dedication during performance",
+      "Video clip of the moment",
+    ],
   },
   3: {
-    name: "VIP Wish",
-    description: "Premium experience with video response",
-    price: 50000,
-    features: ["Guaranteed reading", "Video response from Timi", "Signed certificate", "Exclusive merchandise"],
+    name: "The Global Echo",
+    description: "Includes Tier 1 & 2 + Timi posts the letter on his social media",
+    price: 250,
+    popular: true,
+    features: [
+      "Everything in Stage Whisper",
+      "Letter posted on Timi's social media",
+      "Tagged in the post",
+      "Permanent feature on Wish Wall",
+      "Exclusive merchandise bundle",
+    ],
   },
 } as const
+
+// Concert ticket add-on price in CAD
+export const TICKET_ADDON_PRICE = 85
+
+// Currency
+export const CURRENCY = "CAD"
 
 export const TICKET_TIERS = {
   regular: {

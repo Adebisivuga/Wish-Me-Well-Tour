@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Image from "next/image"
-import { WishForm } from "@/components/wish-form"
+import { SendWishForm } from "@/components/send-wish-form"
 import { Heart, Quote, Sparkles } from "lucide-react"
 
 export const metadata: Metadata = {
@@ -98,8 +98,8 @@ export default function SendAWishPage() {
 
       {/* Form section */}
       <section className="bg-background py-16 md:py-24">
-        <div className="mx-auto max-w-3xl px-6">
-          <WishForm />
+        <div className="mx-auto px-6">
+          <SendWishForm />
         </div>
       </section>
     </div>
