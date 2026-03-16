@@ -116,7 +116,7 @@ export const LETTER_PACKAGES = {
   1: {
     name: "Soulful Signature",
     description: "Printed letter signed by Timi, delivered during Meet & Greet",
-    price: 45,
+    price: 10,
     features: [
       "Handwritten-style printed letter",
       "Personally signed by Timi Dakolo",
@@ -127,7 +127,7 @@ export const LETTER_PACKAGES = {
   2: {
     name: "The Stage Whisper",
     description: "Includes Tier 1 + Timi mentions the loved one's name during performance",
-    price: 120,
+    price: 30,
     features: [
       "Everything in Soulful Signature",
       "Name mentioned on stage by Timi",
@@ -138,7 +138,7 @@ export const LETTER_PACKAGES = {
   3: {
     name: "The Global Echo",
     description: "Includes Tier 1 & 2 + Timi posts the letter on his social media",
-    price: 250,
+    price: 80,
     popular: true,
     features: [
       "Everything in Stage Whisper",
